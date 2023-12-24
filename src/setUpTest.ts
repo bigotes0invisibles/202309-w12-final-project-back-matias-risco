@@ -8,6 +8,8 @@ import gamesMock from "./feature/games/mock/gamesMock";
 import { gamesWithOutId } from "./feature/games/utils/gamesTransformation";
 
 export let server: MongoMemoryServer;
+process.env.JWT_SECRET_KEY ??= "Alfarius";
+process.env.SALT ??= "saltoruim";
 
 const serverConection = async () => {
   try {

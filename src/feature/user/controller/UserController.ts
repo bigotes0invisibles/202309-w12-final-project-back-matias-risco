@@ -9,9 +9,6 @@ import {
 import bcrypt from "bcrypt";
 import CustomError from "../../../server/CustomError/CustomError.js";
 
-process.env.JWT_SECRET_KEY ??= "Alfarius";
-process.env.SALT ??= "saltoruim";
-
 class UserController {
   constructor(private readonly userRepository: UsersRepositoryStructure) {}
 
@@ -50,7 +47,7 @@ class UserController {
     try {
       const { user } = req.body;
 
-      const logUser = await this.userRepository.userLogin!(user);
+      const logUser = await this.userRepository.userLogin(user);
 
       const token = jwt.sign(logUser, process.env.JWT_SECRET_KEY!);
 

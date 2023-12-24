@@ -8,7 +8,7 @@ export interface UsersRepositoryStructure {
     userBase: UserWithOutIdStructure,
   ) => Promise<UserWithOutPasswordStructure>;
 
-  userLogin?: (
+  userLogin: (
     userBase: UserWithOutIdStructure,
   ) => Promise<UserWithOutPasswordStructure>;
 }

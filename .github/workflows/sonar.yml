@@ -19,6 +19,8 @@ jobs:
         env:
           PORT: ${{secrets.PORT}}
           DEBUG: ${{secrets.DEBUG}}
+          JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
+          SALT: ${{secrets.SALT}}
         run: npm run test:coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
@@ -27,3 +29,5 @@ jobs:
           DEBUG: ${{secrets.DEBUG}}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
+          SALT: ${{secrets.SALT}}

@@ -9,6 +9,8 @@ jobs:
     env:
       PORT: ${{secrets.PORT}}
       DEBUG: ${{secrets.DEBUG}}
+      JWT_SECRET_KEY: ${{secrets.JWT_SECRET_KEY}}
+      SALT: ${{secrets.SALT}}
 
     steps:
       - name: ⬇ Git checkout

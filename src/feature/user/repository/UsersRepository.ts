@@ -5,6 +5,7 @@ import {
   type UserWithOutPasswordStructure,
 } from "../types";
 import { type UsersRepositoryStructure } from "./types";
+import { userCredentialComprovation } from "../utils/usersFunction.js";
 
 class UsersRepository implements UsersRepositoryStructure {
   userCreate = async (
@@ -26,12 +27,13 @@ class UsersRepository implements UsersRepositoryStructure {
     }
 
     if (
-      !(await bcrypt.compare(
-        credentialName + process.env.SALT + credentialPassword,
+      !(await userCredentialComprovation(
+        credentialName,
+        credentialPassword,
         user.password,
       ))
     ) {
-      throw new Error("Incorrect Password!");
+      throw new Error("Incorrect Password");
     }
 
     return { id: user._id, name: user.name };

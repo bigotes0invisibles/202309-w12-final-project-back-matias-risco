@@ -6,10 +6,14 @@ import mongoose from "mongoose";
 import Games from "./feature/games/model/Games";
 import gamesMock from "./feature/games/mock/gamesMock";
 import { gamesWithOutId } from "./feature/games/utils/gamesTransformation";
+import Users from "./feature/user/model/Users";
+import { mockUsers } from "./feature/user/mock/usersMock";
+import {
+  usersHashPassword,
+  usersToWithOutId,
+} from "./feature/user/utils/usersFunction";
 
 export let server: MongoMemoryServer;
-process.env.JWT_SECRET_KEY ??= "Alfarius";
-process.env.SALT ??= "saltoruim";
 
 const serverConection = async () => {
   try {
@@ -24,6 +28,7 @@ beforeAll(async () => {
   const mongoDbUrl = server.getUri();
   await connectToDatabase(mongoDbUrl);
   await Games.create(gamesWithOutId(gamesMock));
+  await Users.create(await usersHashPassword(usersToWithOutId(mockUsers)));
 });
 
 afterAll(async () => {

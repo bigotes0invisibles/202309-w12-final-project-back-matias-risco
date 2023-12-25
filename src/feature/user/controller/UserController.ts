@@ -6,8 +6,8 @@ import {
   type UserBodyRequest,
   type UserTokenResponse,
 } from "./types";
-import bcrypt from "bcrypt";
 import CustomError from "../../../server/CustomError/CustomError.js";
+import { userHashPassword } from "../utils/usersFunction";
 
 class UserController {
   constructor(private readonly userRepository: UsersRepositoryStructure) {}
@@ -19,13 +19,10 @@ class UserController {
   ) => {
     try {
       const { user } = req.body;
-      const hashedPasword = await bcrypt.hash(
-        user.name + process.env.SALT + user.password,
-        11,
-      );
-      user.password = hashedPasword;
 
-      const newUser = await this.userRepository.userCreate(user);
+      const newUser = await this.userRepository.userCreate(
+        await userHashPassword(user),
+      );
 
       res.status(200).json({ user: newUser });
     } catch (error) {
@@ -53,11 +50,7 @@ class UserController {
 
       res.status(200).json({ token });
     } catch (error) {
-      const newError = new CustomError(
-        500,
-        "Error en login user",
-        (error as Error).message,
-      );
+      const newError = new CustomError(500, (error as Error).message);
 
       next(newError);
     }

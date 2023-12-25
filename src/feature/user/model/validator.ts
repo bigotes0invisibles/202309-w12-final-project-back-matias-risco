@@ -1,7 +1,7 @@
 import { Joi } from "express-validation";
 import { type UserWithOutIdStructure } from "../types";
 
-export const addUserValidator = {
+export const userValidator = {
   body: Joi.object<{ user: UserWithOutIdStructure }>().keys({
     user: Joi.object<UserWithOutIdStructure>().keys({
       name: Joi.string().required(),

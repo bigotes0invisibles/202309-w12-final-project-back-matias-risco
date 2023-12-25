@@ -10,6 +10,10 @@ import { type UserTokenResponse, type UserBodyRequest } from "../types";
 import { type UsersRepositoryStructure } from "../../repository/types";
 import UserController from "../UserController";
 import type CustomError from "../../../../server/CustomError/CustomError";
+import {
+  userCredentialComprovation,
+  userHashPassword,
+} from "../../utils/usersFunction";
 
 const salt = process.env.SALT ?? "saltoruim";
 
@@ -32,13 +36,10 @@ describe("Given the method loginUser in class UserController", () => {
       user: UserWithOutIdStructure,
     ): Promise<UserWithOutPasswordStructure> {
       const hashedUsers = await Promise.all(
-        mockUsers.map(async (user): Promise<UserStructure> => {
-          const hashedPasword = await bcrypt.hash(
-            user.name + salt + user.password,
-            11,
-          );
-          return { ...user, password: hashedPasword };
-        }),
+        mockUsers.map(
+          async (user): Promise<UserStructure> =>
+            userHashPassword(user) as Promise<UserStructure>,
+        ),
       );
 
       const newUser = hashedUsers.find(({ name }) => user.name === name);
@@ -48,12 +49,13 @@ describe("Given the method loginUser in class UserController", () => {
       }
 
       if (
-        !(await bcrypt.compare(
-          user.name + salt + user.password,
+        !(await userCredentialComprovation(
+          user.name,
+          user.password,
           newUser.password,
         ))
       ) {
-        throw new Error("Incorrect credentials!");
+        throw new Error("Error en login user");
       }
 
       return { id: newUser.id, name: newUser.name };
@@ -101,7 +103,7 @@ describe("Given the method loginUser in class UserController", () => {
     });
   });
 
-  describe("When it is call with a request given a username and password of alfredo", () => {
+  describe("When it is call with a request given a username of alfredo but incorret password", () => {
     test("Then it should call next with 500 'Error en login user'", async () => {
       const req: Partial<UserBodyRequest> = {
         body: {

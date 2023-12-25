@@ -1,8 +1,8 @@
 # ValvePipeApi
 
-[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=isdi-coders-2023_Matias-Risco-Final-Project-back-202309-bcn)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Matias-Risco-Final-Project-back-202309-bcn)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=bigotes0invisibles_202309-w12-final-project-back-matias-risco)](https://sonarcloud.io/summary/new_code?id=bigotes0invisibles_202309-w12-final-project-back-matias-risco)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=isdi-coders-2023_Matias-Risco-Final-Project-back-202309-bcn&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=isdi-coders-2023_Matias-Risco-Final-Project-back-202309-bcn)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=bigotes0invisibles_202309-w12-final-project-back-matias-risco&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=bigotes0invisibles_202309-w12-final-project-back-matias-risco)
 
 ## Technologies Used
 

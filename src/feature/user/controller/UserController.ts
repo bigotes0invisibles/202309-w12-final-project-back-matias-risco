@@ -7,7 +7,7 @@ import {
   type UserTokenResponse,
 } from "./types";
 import CustomError from "../../../server/CustomError/CustomError.js";
-import { userHashPassword } from "../utils/usersFunction";
+import { userHashPassword } from "../utils/usersFunction.js";
 
 class UserController {
   constructor(private readonly userRepository: UsersRepositoryStructure) {}

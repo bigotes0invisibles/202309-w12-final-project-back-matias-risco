@@ -11,7 +11,7 @@ describe("Given GET /users/login/ endpoint", () => {
       const { id, ...alfredo } = mockUsers[0];
 
       const response = await request(app)
-        .get(path)
+        .post(path)
         .send({ user: alfredo })
         .expect(expectCode);
 
@@ -34,7 +34,7 @@ describe("Given GET /users/login/ endpoint", () => {
       const expectedError = "User Not Found";
 
       const response = await request(app)
-        .get(path)
+        .post(path)
         .send({ user: userNotFound })
         .expect(expectCode);
 
@@ -55,7 +55,7 @@ describe("Given GET /users/login/ endpoint", () => {
       const expectedError = "Incorrect Password";
 
       const response = await request(app)
-        .get(path)
+        .post(path)
         .send({ user: alfredo })
         .expect(expectCode);
 

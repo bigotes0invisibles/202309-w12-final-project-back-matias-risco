@@ -1,6 +1,6 @@
-import bcrypt from "bcrypt";
 import Users from "../model/Users.js";
 import {
+  type UserWithOnlyName,
   type UserWithOutIdStructure,
   type UserWithOutPasswordStructure,
 } from "../types";
@@ -37,6 +37,15 @@ class UsersRepository implements UsersRepositoryStructure {
     }
 
     return { id: user._id, name: user.name };
+  };
+
+  userCheck = async ({ name }: UserWithOnlyName): Promise<boolean> => {
+    try {
+      const user = await Users.findOne({ name }).lean();
+      return !!user;
+    } catch (error) {
+      throw new Error("Error in checking User");
+    }
   };
 }
 

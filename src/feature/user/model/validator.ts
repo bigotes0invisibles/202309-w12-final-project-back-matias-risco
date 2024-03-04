@@ -9,3 +9,11 @@ export const userValidator = {
     }),
   }),
 };
+
+export const userCheckValidator = {
+  body: Joi.object<{ user: UserWithOutIdStructure }>().keys({
+    user: Joi.object<UserWithOutIdStructure>().keys({
+      name: Joi.string().required(),
+    }),
+  }),
+};

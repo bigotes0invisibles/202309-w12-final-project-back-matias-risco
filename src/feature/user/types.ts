@@ -11,3 +11,5 @@ export interface UserStructure extends UserWithOutIdStructure {
 }
 
 export type UserWithOutPasswordStructure = Omit<UserStructure, "password">;
+
+export type UserWithOnlyName = Pick<UserDatabaseStructure, "name">;

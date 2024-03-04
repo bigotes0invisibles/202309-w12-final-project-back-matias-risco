@@ -5,6 +5,8 @@ import {
   type UserCreateResponse,
   type UserBodyRequest,
   type UserTokenResponse,
+  type UserNameBodyRequest,
+  type UserCheckResponse,
 } from "./types";
 import CustomError from "../../../server/CustomError/CustomError.js";
 import { userHashPassword } from "../utils/usersFunction.js";
@@ -51,6 +53,27 @@ class UserController {
       res.status(200).json({ token });
     } catch (error) {
       const newError = new CustomError(500, (error as Error).message);
+
+      next(newError);
+    }
+  };
+
+  checkUser = async (
+    req: UserNameBodyRequest,
+    res: UserCheckResponse,
+    next: NextFunction,
+  ) => {
+    try {
+      const { user } = req.body;
+      const userCheck = await this.userRepository.userCheck!(user);
+
+      res.status(200).json({ user: userCheck });
+    } catch (error) {
+      const newError = new CustomError(
+        500,
+        "Error in checking User",
+        (error as Error).message,
+      );
 
       next(newError);
     }

@@ -10,6 +10,7 @@ import {
   languages,
   platforms,
   type GameStructureApi,
+  type GameWithOnlyId,
 } from "../types.js";
 
 export const addGameValidator = {
@@ -85,6 +86,14 @@ export const editGameValidator = {
       platforms: Joi.array()
         .items(Joi.string().valid(...platforms))
         .optional(),
+    }),
+  }),
+};
+
+export const checkGameValidator = {
+  body: Joi.object<{ game: GameWithOnlyId }>().keys({
+    game: Joi.object<GameWithOnlyId>().keys({
+      id: Joi.string().required(),
     }),
   }),
 };

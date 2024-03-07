@@ -1,7 +1,11 @@
 import { Router } from "express";
 import GamesController from "../controller/GamesController.js";
 import GamesRepository from "../repository/GamesRepository.js";
-import { addGameValidator, editGameValidator } from "../model/validator.js";
+import {
+  addGameValidator,
+  checkGameValidator,
+  editGameValidator,
+} from "../model/validator.js";
 import { validate } from "express-validation";
 
 const gamesRepository = new GamesRepository();
@@ -18,5 +22,10 @@ gamesRouter.patch(
   gamesController.editGame,
 );
 gamesRouter.get("/count", gamesController.countGame);
+gamesRouter.post(
+  "/check",
+  validate(checkGameValidator),
+  gamesController.checkGame,
+);
 
 export default gamesRouter;

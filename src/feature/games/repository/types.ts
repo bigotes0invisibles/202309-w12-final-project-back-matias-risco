@@ -12,5 +12,5 @@ export interface GamesRepositoryStructure {
   infoGame: (id: string) => Promise<GameStructureApi>;
   editGame: (game: GamePartialStructureApi) => Promise<GameStructureApi>;
   countGame: () => Promise<number>;
-  checkGame?: (game: GameWithOnlyId) => Promise<boolean>;
+  checkGame: (game: GameWithOnlyId) => Promise<boolean>;
 }

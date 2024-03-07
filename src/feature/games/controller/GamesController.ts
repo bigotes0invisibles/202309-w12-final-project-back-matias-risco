@@ -137,7 +137,7 @@ class GamesController {
     try {
       const { game } = req.body;
 
-      const checkGame = await this.gamesRepository.checkGame!(game);
+      const checkGame = await this.gamesRepository.checkGame(game);
 
       res.status(200).json({ game: checkGame });
     } catch (error) {

@@ -82,7 +82,7 @@ class GamesRepository implements GamesRepositoryStructure {
     }
   }
 
-  async checkGame({ id: _id }: GameWithOnlyId): Promise<boolean> {
+  async checkGame(_id: string): Promise<boolean> {
     try {
       const checkGame = await Games.findOne({ _id }).lean();
       return !!checkGame;

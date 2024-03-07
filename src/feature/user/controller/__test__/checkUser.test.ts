@@ -21,7 +21,7 @@ describe("Given the method checkUser in class UserController", () => {
   const next: NextFunction = jest.fn();
 
   const userRepository: Partial<UsersRepositoryStructure> = {
-    userCheck: async ({ name }: UserWithOnlyName): Promise<boolean> =>
+    userCheck: async (name: string): Promise<boolean> =>
       mockUsers.some(({ name: mockName }) => name === mockName),
   };
 

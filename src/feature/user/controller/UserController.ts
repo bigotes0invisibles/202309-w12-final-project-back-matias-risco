@@ -64,8 +64,10 @@ class UserController {
     next: NextFunction,
   ) => {
     try {
-      const { user } = req.body;
-      const userCheck = await this.userRepository.userCheck(user);
+      const {
+        user: { name },
+      } = req.body;
+      const userCheck = await this.userRepository.userCheck(name);
 
       res.status(200).json({ user: userCheck });
     } catch (error) {

@@ -1,13 +1,9 @@
 import mongoose from "mongoose";
-import { type CommentsDatabaseStructure } from "../types";
+import { type CommentDatabaseStructure } from "../types";
 
-const CommentShema = new mongoose.Schema<CommentsDatabaseStructure>(
+const CommentShema = new mongoose.Schema<CommentDatabaseStructure>(
   {
     _idGame: {
-      type: String,
-      required: true,
-    },
-    _idUser: {
       type: String,
       required: true,
     },

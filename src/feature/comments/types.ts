@@ -1,10 +1,13 @@
-export interface CommentsDatabaseStructure {
+export interface CommentDatabaseStructure {
   _id: string;
-  _idUser: string;
   _idGame: string;
   userName: string;
   comment: string;
-  response: CommentsDatabaseStructure[];
+  response: CommentDatabaseStructure[];
 }
 
-export type CommentsWithOutId = Omit<CommentsDatabaseStructure, "_id">;
+export type CommentWithOutId = Omit<CommentDatabaseStructure, "_id">;
+
+export interface CommentApiStructure extends CommentWithOutId {
+  id: string;
+}

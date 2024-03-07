@@ -29,7 +29,7 @@ describe("Given the function infoGame in GamesController", () => {
       };
 
       const gamesRepository: Partial<GamesRepositoryStructure> = {
-        async checkGame({ id }) {
+        async checkGame(id: string) {
           const game = gamesMock.find(({ _id }) => _id === id);
 
           return !!game;

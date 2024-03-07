@@ -2,6 +2,7 @@ import {
   type GameStructureWithOutId,
   type GameStructureApi,
   type GamePartialStructureApi,
+  type GameWithOnlyId,
 } from "../types";
 import { type GamesRepositoryStructure } from "./types";
 import { gameToApi, gamesToApi } from "../utils/gamesTransformation.js";
@@ -76,6 +77,15 @@ class GamesRepository implements GamesRepositoryStructure {
       const number = await Games.countDocuments().lean();
 
       return number;
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async checkGame({ id: _id }: GameWithOnlyId): Promise<boolean> {
+    try {
+      const checkGame = await Games.findOne({ _id }).lean();
+      return !!checkGame;
     } catch (error) {
       throw new Error((error as Error).message);
     }

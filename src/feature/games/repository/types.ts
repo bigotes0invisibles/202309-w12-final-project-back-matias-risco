@@ -2,6 +2,7 @@ import {
   type GameStructureWithOutId,
   type GameStructureApi,
   type GamePartialStructureApi,
+  type GameWithOnlyId,
 } from "../types";
 
 export interface GamesRepositoryStructure {
@@ -11,4 +12,5 @@ export interface GamesRepositoryStructure {
   infoGame: (id: string) => Promise<GameStructureApi>;
   editGame: (game: GamePartialStructureApi) => Promise<GameStructureApi>;
   countGame: () => Promise<number>;
+  checkGame?: (game: GameWithOnlyId) => Promise<boolean>;
 }

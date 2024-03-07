@@ -125,3 +125,5 @@ export interface GamePartialStructureApi
   extends Partial<GameStructureWithOutId> {
   id: string;
 }
+
+export type GameWithOnlyId = Pick<GameStructureApi, "id">;

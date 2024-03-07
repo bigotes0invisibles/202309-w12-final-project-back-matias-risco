@@ -7,6 +7,8 @@ import {
   type GameIdRequestParams,
   type GamesResponseBody,
   type RequestQuery,
+  type GameCheckRequest,
+  type GameCheckResponseParams,
 } from "./types";
 import CustomError from "../../../server/CustomError/CustomError.js";
 
@@ -117,13 +119,35 @@ class GamesController {
 
       res.status(200).json({ numberGames });
     } catch (error) {
-      const errors = new CustomError(
+      const newError = new CustomError(
         400,
         "Error problem in asking the number of games",
         (error as Error).message,
       );
 
-      next(errors);
+      next(newError);
+    }
+  };
+
+  checkGame = async (
+    req: GameCheckRequest,
+    res: GameCheckResponseParams,
+    next: NextFunction,
+  ) => {
+    try {
+      const { game } = req.body;
+
+      const checkGame = await this.gamesRepository.checkGame!(game);
+
+      res.status(200).json({ game: checkGame });
+    } catch (error) {
+      const newError = new CustomError(
+        400,
+        "Error in checking the game Id",
+        (error as Error).message,
+      );
+
+      next(newError);
     }
   };
 }

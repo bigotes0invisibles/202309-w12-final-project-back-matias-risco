@@ -3,6 +3,7 @@ import {
   type GameStructureWithOutId,
   type GameStructureApi,
   type GamePartialStructureApi,
+  type GameWithOnlyId,
 } from "../types";
 
 export interface RequestQuery {
@@ -36,3 +37,13 @@ export type GameEditRequest = Request<
     game: GamePartialStructureApi;
   }
 >;
+
+export type GameCheckRequest = Request<
+  Record<string, unknown>,
+  Record<string, unknown>,
+  {
+    game: GameWithOnlyId;
+  }
+>;
+
+export type GameCheckResponseParams = Response<{ game: boolean }>;

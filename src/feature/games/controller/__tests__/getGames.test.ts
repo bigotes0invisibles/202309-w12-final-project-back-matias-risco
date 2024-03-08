@@ -1,4 +1,4 @@
-import { type Request, type Response } from "express";
+import { type Request } from "express";
 import { type GamesResponseBody } from "../types";
 import { gameToApi, gamesToApi } from "../../utils/gamesTransformation";
 import gamesMock from "../../mock/gamesMock";

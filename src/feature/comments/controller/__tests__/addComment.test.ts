@@ -1,11 +1,7 @@
 import { type NextFunction } from "express";
 import { newComment } from "../../mock/commentsMock";
 import { type CommentsRepositoryStructure } from "../../repository/types";
-import {
-  type CommentWithOutId,
-  type CommentDatabaseStructure,
-  type CommentApiStructure,
-} from "../../types";
+import { type CommentWithOutId, type CommentApiStructure } from "../../types";
 import CommentsController from "../CommentsController";
 import { type CommentBodyResponse, type CommentBodyRequest } from "../types";
 import type CustomError from "../../../../server/CustomError/CustomError";

@@ -1,9 +1,5 @@
 import { type Response, type Request } from "express";
-import {
-  type CommentApiStructure,
-  type CommentDatabaseStructure,
-  type CommentWithOutId,
-} from "../types";
+import { type CommentApiStructure, type CommentWithOutId } from "../types";
 
 export type CommentBodyRequest = Request<
   Record<string, unknown>,

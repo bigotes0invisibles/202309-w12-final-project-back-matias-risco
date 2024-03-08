@@ -1,6 +1,5 @@
 import Users from "../model/Users.js";
 import {
-  type UserWithOnlyName,
   type UserWithOutIdStructure,
   type UserWithOutPasswordStructure,
 } from "../types";

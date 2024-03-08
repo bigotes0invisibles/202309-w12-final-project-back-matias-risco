@@ -2,7 +2,6 @@ import {
   type GameStructureWithOutId,
   type GameStructureApi,
   type GamePartialStructureApi,
-  type GameWithOnlyId,
 } from "../types";
 
 export interface GamesRepositoryStructure {

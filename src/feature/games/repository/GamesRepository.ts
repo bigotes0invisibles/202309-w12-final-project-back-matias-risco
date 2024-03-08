@@ -2,7 +2,6 @@ import {
   type GameStructureWithOutId,
   type GameStructureApi,
   type GamePartialStructureApi,
-  type GameWithOnlyId,
 } from "../types";
 import { type GamesRepositoryStructure } from "./types";
 import { gameToApi, gamesToApi } from "../utils/gamesTransformation.js";

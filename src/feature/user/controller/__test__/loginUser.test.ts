@@ -1,5 +1,4 @@
 import { type NextFunction } from "express";
-import bcrypt from "bcrypt";
 import { mockUsers } from "../../mock/usersMock";
 import {
   type UserWithOutIdStructure,
@@ -14,8 +13,6 @@ import {
   userCredentialComprovation,
   userHashPassword,
 } from "../../utils/usersFunction";
-
-const salt = process.env.SALT ?? "saltoruim";
 
 beforeEach(() => {
   jest.clearAllMocks();

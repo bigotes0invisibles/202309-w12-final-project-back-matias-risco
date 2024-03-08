@@ -1,5 +1,5 @@
 import { Joi } from "express-validation";
-import { CommentApiStructure, type CommentWithOutId } from "../types";
+import { type CommentWithOutId } from "../types";
 
 export const addCommentValidator = {
   body: Joi.object<{ comment: CommentWithOutId }>().keys({

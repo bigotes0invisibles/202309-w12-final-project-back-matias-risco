@@ -1,11 +1,7 @@
 import { gamesRepository } from "../../games/router/gamesRouter";
 import { usersRepository } from "../../user/router/userRouter";
 import Comments from "../model/Comments";
-import {
-  type CommentWithOutId,
-  type CommentDatabaseStructure,
-  type CommentApiStructure,
-} from "../types";
+import { type CommentWithOutId, type CommentApiStructure } from "../types";
 import { commentToApi } from "../utils/commentTransformation";
 import { type CommentsRepositoryStructure } from "./types";
 

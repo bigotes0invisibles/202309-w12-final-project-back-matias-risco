@@ -4,7 +4,6 @@ import {
   type GameStructureApi,
   type GamePartialStructureApi,
 } from "../../types";
-import mongoose from "mongoose";
 
 let games: GameStructureApi[];
 let sendGame: GamePartialStructureApi;

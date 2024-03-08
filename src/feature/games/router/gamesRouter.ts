@@ -8,7 +8,7 @@ import {
 } from "../model/validator.js";
 import { validate } from "express-validation";
 
-const gamesRepository = new GamesRepository();
+export const gamesRepository = new GamesRepository();
 const gamesController = new GamesController(gamesRepository);
 const gamesRouter = Router();
 

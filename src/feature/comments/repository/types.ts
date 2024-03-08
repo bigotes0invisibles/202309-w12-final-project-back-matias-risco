@@ -1,10 +1,5 @@
-import {
-  type CommentsDatabaseStructure,
-  type CommentsWithOutId,
-} from "../types";
+import { type CommentApiStructure, type CommentWithOutId } from "../types";
 
 export interface CommentsRepositoryStructure {
-  addComment: (
-    comment: CommentsWithOutId,
-  ) => Promise<CommentsDatabaseStructure>;
+  addComment: (comment: CommentWithOutId) => Promise<CommentApiStructure>;
 }

@@ -135,9 +135,11 @@ class GamesController {
     next: NextFunction,
   ) => {
     try {
-      const { game } = req.body;
+      const {
+        game: { id },
+      } = req.body;
 
-      const checkGame = await this.gamesRepository.checkGame(game);
+      const checkGame = await this.gamesRepository.checkGame(id);
 
       res.status(200).json({ game: checkGame });
     } catch (error) {

@@ -1,4 +1,4 @@
-import { type NextFunction, type Request } from "express";
+import { type NextFunction } from "express";
 import {
   type GameBodyResponseParams,
   type GameIdRequestParams,

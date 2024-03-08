@@ -1,6 +1,5 @@
 import Users from "../model/Users.js";
 import {
-  type UserWithOnlyName,
   type UserWithOutIdStructure,
   type UserWithOutPasswordStructure,
 } from "../types";
@@ -39,7 +38,7 @@ class UsersRepository implements UsersRepositoryStructure {
     return { id: user._id, name: user.name };
   };
 
-  userCheck = async ({ name }: UserWithOnlyName): Promise<boolean> => {
+  userCheck = async (name: string): Promise<boolean> => {
     try {
       const user = await Users.findOne({ name }).lean();
       return !!user;

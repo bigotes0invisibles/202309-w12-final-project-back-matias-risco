@@ -4,7 +4,7 @@ import UsersRepository from "../repository/UsersRepository.js";
 import UserController from "../controller/UserController.js";
 import { userCheckValidator, userValidator } from "../model/validator.js";
 
-const usersRepository = new UsersRepository();
+export const usersRepository = new UsersRepository();
 const usersController = new UserController(usersRepository);
 const userRouter = Router();
 

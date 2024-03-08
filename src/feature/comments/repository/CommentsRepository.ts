@@ -1,8 +1,8 @@
-import { gamesRepository } from "../../games/router/gamesRouter";
-import { usersRepository } from "../../user/router/userRouter";
-import Comments from "../model/Comments";
+import { gamesRepository } from "../../games/router/gamesRouter.js";
+import { usersRepository } from "../../user/router/userRouter.js";
+import Comments from "../model/Comments.js";
 import { type CommentWithOutId, type CommentApiStructure } from "../types";
-import { commentToApi } from "../utils/commentTransformation";
+import { commentToApi } from "../utils/commentTransformation.js";
 import { type CommentsRepositoryStructure } from "./types";
 
 class CommentsRepository implements CommentsRepositoryStructure {

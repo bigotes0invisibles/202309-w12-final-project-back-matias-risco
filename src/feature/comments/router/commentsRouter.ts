@@ -1,8 +1,8 @@
 import { Router } from "express";
-import CommentsController from "../controller/CommentsController";
-import CommentsRepository from "../repository/CommentsRepository";
+import CommentsController from "../controller/CommentsController.js";
+import CommentsRepository from "../repository/CommentsRepository.js";
 import { validate } from "express-validation";
-import { addCommentValidator } from "../model/validator";
+import { addCommentValidator } from "../model/validator.js";
 
 const commentsRepository = new CommentsRepository();
 const commentsController = new CommentsController(commentsRepository);

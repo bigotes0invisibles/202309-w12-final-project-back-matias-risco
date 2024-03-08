@@ -2,7 +2,7 @@ import { type NextFunction } from "express";
 import { type CommentsRepositoryStructure } from "../repository/types";
 import { type CommentBodyRequest, type CommentBodyResponse } from "./types";
 import { type Error } from "mongoose";
-import CustomError from "../../../server/CustomError/CustomError";
+import CustomError from "../../../server/CustomError/CustomError.js";
 
 class CommentsController {
   constructor(

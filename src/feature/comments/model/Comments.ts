@@ -15,6 +15,10 @@ const CommentShema = new mongoose.Schema<CommentDatabaseStructure>(
       type: String,
       required: true,
     },
+    response: {
+      type: [String],
+      required: true,
+    },
   },
   { versionKey: false },
 );

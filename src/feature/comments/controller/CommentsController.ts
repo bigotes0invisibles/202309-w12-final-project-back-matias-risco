@@ -20,11 +20,7 @@ class CommentsController {
 
       res.status(200).json({ comment: newComment });
     } catch (error) {
-      const newError = new CustomError(
-        409,
-        "Error in adding new comment",
-        (error as Error).message,
-      );
+      const newError = new CustomError(406, (error as Error).message);
 
       next(newError);
     }

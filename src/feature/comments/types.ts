@@ -3,7 +3,7 @@ export interface CommentDatabaseStructure {
   _idGame: string;
   userName: string;
   comment: string;
-  response: CommentDatabaseStructure[];
+  response: string[];
 }
 
 export type CommentWithOutId = Omit<CommentDatabaseStructure, "_id">;

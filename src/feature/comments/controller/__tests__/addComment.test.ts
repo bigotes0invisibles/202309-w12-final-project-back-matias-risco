@@ -67,13 +67,13 @@ describe("Given the function addComment in CommentsController", () => {
   describe("When it is call with a Response  and a Request with the information of Ana Comment with out id, but there is a Error", () => {
     test("then it should call next with Error 409 'Error in adding new comment'", async () => {
       const expectError: Partial<CustomError> = {
-        statusCode: 409,
+        statusCode: 406,
         message: "Error in adding new comment",
       };
 
       const commentsRepository: Partial<CommentsRepositoryStructure> = {
         async addComment() {
-          throw new Error("baka");
+          throw new Error("Error in adding new comment");
         },
       };
 

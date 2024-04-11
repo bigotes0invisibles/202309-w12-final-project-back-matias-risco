@@ -2,7 +2,7 @@ import { type Response, type Request } from "express";
 import {
   type UserWithOutPasswordStructure,
   type UserWithOutIdStructure,
-  type UserWithOnlyName,
+  type UserWithOnlyNameAndToken,
 } from "../types";
 
 export type UserBodyRequest = Request<
@@ -14,7 +14,7 @@ export type UserBodyRequest = Request<
 export type UserNameBodyRequest = Request<
   Record<string, unknown>,
   Record<string, unknown>,
-  { user: UserWithOnlyName }
+  { user: UserWithOnlyNameAndToken }
 >;
 
 export type UserCreateResponse = Response<{

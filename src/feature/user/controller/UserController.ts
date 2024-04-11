@@ -10,6 +10,7 @@ import {
 } from "./types";
 import CustomError from "../../../server/CustomError/CustomError.js";
 import { userHashPassword } from "../utils/usersFunction.js";
+import { type UserWithOutPasswordStructure } from "../types";
 
 class UserController {
   constructor(private readonly userRepository: UsersRepositoryStructure) {}
@@ -65,9 +66,14 @@ class UserController {
   ) => {
     try {
       const {
-        user: { name },
+        user: { name, token },
       } = req.body;
-      const userCheck = await this.userRepository.userCheck(name);
+      const user = jwt.verify(
+        token,
+        process.env.JWT_SECRET_KEY!,
+      ) as UserWithOutPasswordStructure;
+
+      const userCheck = await this.userRepository.userCheck(name, user.id);
 
       res.status(200).json({ user: userCheck });
     } catch (error) {

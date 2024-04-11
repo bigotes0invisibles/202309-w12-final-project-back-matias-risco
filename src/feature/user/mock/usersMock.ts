@@ -9,11 +9,11 @@ export const mockUsers: UserStructure[] = [
   {
     name: "alfredo",
     password: "whassap",
-    id: "1214caaf5af4ad5",
+    id: "6618208d2bf16a105be00089",
   },
   {
     name: "sopapilla",
     password: "copenco",
-    id: "1214caafabce235",
+    id: "123456782bf16a105be9c989",
   },
 ];

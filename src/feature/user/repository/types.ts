@@ -12,5 +12,5 @@ export interface UsersRepositoryStructure {
     userBase: UserWithOutIdStructure,
   ) => Promise<UserWithOutPasswordStructure>;
 
-  userCheck: (userName: string) => Promise<boolean>;
+  userCheck: (userName: string, _id: string) => Promise<boolean>;
 }

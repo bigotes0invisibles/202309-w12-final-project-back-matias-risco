@@ -5,19 +5,45 @@ import { type CommentWithOutId, type CommentApiStructure } from "../../types";
 import CommentsController from "../CommentsController";
 import { type CommentBodyResponse, type CommentBodyRequest } from "../types";
 import type CustomError from "../../../../server/CustomError/CustomError";
+import { mockUsers } from "../../../user/mock/usersMock";
+import request from "supertest";
+import app from "../../../../server/app";
+import jwt from "jsonwebtoken";
+import { type UserWithOutPasswordStructure } from "../../../user/types";
 
-afterEach(() => {
+let alfredoId: string;
+let alfredoToken: string;
+let alfredoName: string;
+
+beforeAll(async () => {
+  const path = "/users/login/";
+  const expectCode = 200;
+  const { id, ...alfredo } = mockUsers[0];
+
+  const response = await request(app)
+    .post(path)
+    .send({ user: alfredo })
+    .expect(expectCode);
+
+  const { token } = response.body as { token: string };
+
+  alfredoToken = token;
+
+  const user = jwt.verify(
+    token,
+    process.env.JWT_SECRET_KEY!,
+  ) as UserWithOutPasswordStructure;
+
+  alfredoId = user.id;
+  alfredoName = user.name;
+});
+
+beforeEach(() => {
   jest.clearAllMocks();
 });
 
 describe("Given the function addComment in CommentsController", () => {
   const id = "656aa0000000000000000006";
-
-  const req: Partial<CommentBodyRequest> = {
-    body: {
-      comment: newComment,
-    },
-  };
 
   const res: Partial<CommentBodyResponse> = {
     status: jest.fn().mockReturnThis(),
@@ -26,12 +52,26 @@ describe("Given the function addComment in CommentsController", () => {
 
   const next: NextFunction = jest.fn();
 
-  describe("When it is call with a Response  and a Request with the information of Ana Comment with out id", () => {
-    test("then it should call status with Code 200 and  the information of Ana comment with a new id", async () => {
+  describe("When it is call with a Response  and a Request with the information of Alfredo Comment with out id", () => {
+    test("then it should call status with Code 200 and  the information of Alfredo comment with a new id", async () => {
+      const req: Partial<CommentBodyRequest> = {
+        body: {
+          comment: {
+            userName: alfredoName,
+            token: alfredoToken,
+            _idGame: newComment._idGame,
+            comment: newComment.comment,
+            response: [...newComment.response],
+          },
+        },
+      };
+
       const expectCode = 200;
       const expectInformation: CommentApiStructure = {
         id,
         ...newComment,
+        _idUser: alfredoId,
+        userName: alfredoName,
       };
 
       const commentsRepository: Partial<CommentsRepositoryStructure> = {
@@ -62,6 +102,18 @@ describe("Given the function addComment in CommentsController", () => {
 
   describe("When it is call with a Response  and a Request with the information of Ana Comment with out id, but there is a Error", () => {
     test("then it should call next with Error 409 'Error in adding new comment'", async () => {
+      const req: Partial<CommentBodyRequest> = {
+        body: {
+          comment: {
+            userName: alfredoName,
+            token: alfredoToken,
+            _idGame: newComment._idGame,
+            comment: newComment.comment,
+            response: [...newComment.response],
+          },
+        },
+      };
+
       const expectError: Partial<CustomError> = {
         statusCode: 406,
         message: "Error in adding new comment",

@@ -1,18 +1,45 @@
 import { type NextFunction } from "express";
 import { mockUsers } from "../../mock/usersMock";
-import { type UserWithOnlyName } from "../../types";
+import { type UserWithOutPasswordStructure } from "../../types";
 import { type UserNameBodyRequest, type UserCheckResponse } from "../types";
 import { type UsersRepositoryStructure } from "../../repository/types";
 import UserController from "../UserController";
 import type CustomError from "../../../../server/CustomError/CustomError";
+import request from "supertest";
+import app from "../../../../server/app";
+import jwt from "jsonwebtoken";
+
+let alfredoId: string;
+let alfredoToken: string;
+let alfredoName: string;
+
+beforeAll(async () => {
+  const path = "/users/login/";
+  const expectCode = 200;
+  const { id, ...alfredo } = mockUsers[0];
+
+  const response = await request(app)
+    .post(path)
+    .send({ user: alfredo })
+    .expect(expectCode);
+
+  const { token } = response.body as { token: string };
+
+  alfredoToken = token;
+  const user = jwt.verify(
+    token,
+    process.env.JWT_SECRET_KEY!,
+  ) as UserWithOutPasswordStructure;
+
+  alfredoId = user.id;
+  alfredoName = user.name;
+});
 
 beforeEach(() => {
   jest.clearAllMocks();
 });
 
 describe("Given the method checkUser in class UserController", () => {
-  const userAlfredo: UserWithOnlyName = { name: mockUsers[0].name };
-
   const res: Partial<UserCheckResponse> = {
     status: jest.fn().mockReturnThis(),
     json: jest.fn().mockReturnThis(),
@@ -21,8 +48,10 @@ describe("Given the method checkUser in class UserController", () => {
   const next: NextFunction = jest.fn();
 
   const userRepository: Partial<UsersRepositoryStructure> = {
-    userCheck: async (name: string): Promise<boolean> =>
-      mockUsers.some(({ name: mockName }) => name === mockName),
+    userCheck: async (name: string, _id: string): Promise<boolean> =>
+      mockUsers.some(
+        ({ name: mockName }) => name === mockName && _id === alfredoId,
+      ),
   };
 
   const userController = new UserController(
@@ -37,7 +66,8 @@ describe("Given the method checkUser in class UserController", () => {
       const req: Partial<UserNameBodyRequest> = {
         body: {
           user: {
-            name: userAlfredo.name,
+            name: alfredoName,
+            token: alfredoToken,
           },
         },
       };

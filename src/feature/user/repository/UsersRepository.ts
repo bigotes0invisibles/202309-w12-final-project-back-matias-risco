@@ -38,9 +38,9 @@ class UsersRepository implements UsersRepositoryStructure {
     return { id: user._id, name: user.name };
   };
 
-  userCheck = async (name: string): Promise<boolean> => {
+  userCheck = async (name: string, _id: string): Promise<boolean> => {
     try {
-      const user = await Users.findOne({ name }).lean();
+      const user = await Users.findOne({ name, _id }).lean();
       return !!user;
     } catch (error) {
       throw new Error("Error in checking User");

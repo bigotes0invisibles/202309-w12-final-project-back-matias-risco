@@ -8,8 +8,8 @@ import { type CommentsRepositoryStructure } from "./types";
 class CommentsRepository implements CommentsRepositoryStructure {
   async addComment(comment: CommentWithOutId): Promise<CommentApiStructure> {
     try {
-      const { _idGame, userName } = comment;
-      if (!(await usersRepository.userCheck(userName))) {
+      const { _idGame, userName, _idUser } = comment;
+      if (!(await usersRepository.userCheck(userName, _idUser))) {
         throw new Error(`Error: the userName: ${userName} dosen't exist`);
       }
 

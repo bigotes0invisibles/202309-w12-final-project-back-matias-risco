@@ -7,6 +7,10 @@ const CommentShema = new mongoose.Schema<CommentDatabaseStructure>(
       type: String,
       required: true,
     },
+    _idUser: {
+      type: String,
+      required: true,
+    },
     comment: {
       type: String,
       required: true,

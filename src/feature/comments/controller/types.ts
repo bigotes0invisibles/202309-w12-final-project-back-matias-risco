@@ -9,6 +9,19 @@ export type CommentBodyRequest = Request<
   }
 >;
 
+export type CommentsGameRequest = Request<
+  Record<string, unknown>,
+  Record<string, unknown>,
+  Record<string, unknown>,
+  { idGame: string }
+>;
+
 export type CommentBodyResponse = Response<{
   comment: CommentApiStructure;
 }>;
+
+export interface CommentsBaseResponBody {
+  comments: CommentApiStructure[];
+}
+
+export type CommentsBodyResponse = Response<CommentsBaseResponBody>;

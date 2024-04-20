@@ -2,7 +2,7 @@ import { gamesRepository } from "../../games/router/gamesRouter.js";
 import { usersRepository } from "../../user/router/userRouter.js";
 import Comments from "../model/Comments.js";
 import { type CommentWithOutId, type CommentApiStructure } from "../types";
-import { commentToApi } from "../utils/commentTransformation.js";
+import { commentToApi, commentsToApi } from "../utils/commentTransformation.js";
 import { type CommentsRepositoryStructure } from "./types";
 
 class CommentsRepository implements CommentsRepositoryStructure {
@@ -20,6 +20,15 @@ class CommentsRepository implements CommentsRepositoryStructure {
       const newComment = (await Comments.create(comment)).toJSON();
 
       return commentToApi(newComment);
+    } catch (error) {
+      throw new Error((error as Error).message);
+    }
+  }
+
+  async getCommentsByIdGame(_idGame: string): Promise<CommentApiStructure[]> {
+    try {
+      const comments = await Comments.find({ _idGame }).lean();
+      return commentsToApi(comments);
     } catch (error) {
       throw new Error((error as Error).message);
     }

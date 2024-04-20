@@ -1,5 +1,7 @@
 import "dotenv/config";
 import "./server/index";
+import request from "supertest";
+import app from "./server/app";
 import MongoMemoryServer from "mongodb-memory-server-core";
 import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
@@ -12,8 +14,14 @@ import {
   usersHashPassword,
   usersToWithOutId,
 } from "./feature/user/utils/usersFunction";
+import Comments from "./feature/comments/model/Comments";
+import { commentsToWithOutId } from "./feature/comments/utils/commentTransformation";
+import { commentsMock } from "./feature/comments/mock/commentsMock";
+import { type GameStructureApi } from "./feature/games/types";
+import { type GamesJson } from "./feature/games/controller/types";
 
 export let server: MongoMemoryServer;
+export let gamesDatabase: GameStructureApi[];
 
 const serverConection = async () => {
   try {
@@ -29,6 +37,32 @@ beforeAll(async () => {
   await connectToDatabase(mongoDbUrl);
   await Games.create(gamesWithOutId(gamesMock));
   await Users.create(await usersHashPassword(usersToWithOutId(mockUsers)));
+  const response = await request(app)
+    .get("/games")
+    .set("Accept", "application/json");
+
+  const { games } = response.body as GamesJson;
+
+  gamesDatabase = games;
+  const newGamesId = gamesMock.map(({ name, _id }) => {
+    const gameIdDatabase = games.find(
+      ({ name: databaseName }) => databaseName === name,
+    )?.id;
+    return { _id, gameIdDatabase };
+  });
+
+  const commentsForCreate = commentsMock.map((comment) => {
+    const { _idGame } = comment;
+    const newComment = {
+      ...comment,
+      _idGame:
+        newGamesId.find(({ _id }) => _idGame === _id)?.gameIdDatabase ?? "",
+    };
+
+    return newComment;
+  });
+
+  await Comments.create(commentsToWithOutId(commentsForCreate));
 });
 
 afterAll(async () => {

@@ -52,12 +52,15 @@ class CommentsController {
     try {
       const { idGame } = req.query;
       const comments =
-        await this.commentsRepository.getCommentsByIdGame!(idGame);
+        await this.commentsRepository.getCommentsByIdGame(idGame);
 
       res.status(200).json({ comments });
     } catch (error) {
-      const newError = new CustomError(406, (error as Error).message);
-
+      const newError = new CustomError(
+        406,
+        "Error in getting Comments",
+        (error as Error).message,
+      );
       next(newError);
     }
   };

@@ -1,8 +1,8 @@
 import gamesMock from "../../games/mock/gamesMock";
 import { type CommentApiStructure, type CommentWithOutId } from "../types";
 
-const idGameArcherMelo = gamesMock[0]._id;
-const idGameJenga = gamesMock[1]._id;
+export const { _id: idGameArcherMelo, name: nameGameArcherMelo } = gamesMock[0];
+export const { _id: idGameJenga, name: nameGameJenga } = gamesMock[1];
 
 export const newComment: CommentWithOutId = {
   _idUser: "adfawfawfawfwaf",

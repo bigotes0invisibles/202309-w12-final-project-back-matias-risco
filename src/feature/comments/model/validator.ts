@@ -1,5 +1,7 @@
 import { Joi } from "express-validation";
 import { type CommentWithToken } from "../types";
+import { query } from "express";
+import { type GameIdStructure } from "../controller/types";
 
 export const addCommentValidator = {
   body: Joi.object<{ comment: CommentWithToken }>().keys({
@@ -10,5 +12,11 @@ export const addCommentValidator = {
       userName: Joi.string().required(),
       response: Joi.array().items(Joi.string()).required(),
     }),
+  }),
+};
+
+export const getCommentsValidator = {
+  query: Joi.object<GameIdStructure>({
+    idGame: Joi.string().required().length(24),
   }),
 };

@@ -1,20 +1,20 @@
 import gamesMock from "../../games/mock/gamesMock";
-import { type CommentApiStructure, type CommentWithOutId } from "../types";
+import { type CommentDatabaseStructure, type CommentWithOutId } from "../types";
 
 export const { _id: idGameArcherMelo, name: nameGameArcherMelo } = gamesMock[0];
 export const { _id: idGameJenga, name: nameGameJenga } = gamesMock[1];
 
 export const newComment: CommentWithOutId = {
-  _idUser: "adfawfawfawfwaf",
+  idUser: "adfawfawfawfwaf",
   userName: "afawfwafwafaw",
-  _idGame: "r243khj3k213rklh",
+  idGame: "r243khj3k213rklh",
   comment: "Hola todos soy yo, yo yo mismisimo yo",
   response: [],
 };
 
-export const commentsMock: CommentApiStructure[] = [
+export const commentsMock: CommentDatabaseStructure[] = [
   {
-    id: "awfij081ufj0892f",
+    _id: "awfij081ufj0892f",
     _idGame: idGameArcherMelo,
     _idUser: "1235131212gw3tqw3tgwfg3",
     comment: "hola me llamo matias",
@@ -22,7 +22,7 @@ export const commentsMock: CommentApiStructure[] = [
     userName: "alfarium",
   },
   {
-    id: "f12ouy1ho9if71y9f",
+    _id: "f12ouy1ho9if71y9f",
     _idGame: idGameArcherMelo,
     _idUser: "d1qoh2ud19io2fuh1",
     comment: "afajlwfjlajwfiawfj",
@@ -30,7 +30,7 @@ export const commentsMock: CommentApiStructure[] = [
     userName: "decarium",
   },
   {
-    id: "1lf1jjf9229dd912d9",
+    _id: "1lf1jjf9229dd912d9",
     _idGame: idGameArcherMelo,
     _idUser: "d;qkjd1209dj90d2912dj",
     comment: "algo estoy commentando",
@@ -38,7 +38,7 @@ export const commentsMock: CommentApiStructure[] = [
     userName: "corpo",
   },
   {
-    id: "1lf1jjf9229dd912d9",
+    _id: "1lf1jjf9229dd912d9",
     _idGame: idGameArcherMelo,
     _idUser: "d;qkjd1209dj90d2912dj",
     comment: "algo estoy commentando en games 1",
@@ -46,7 +46,7 @@ export const commentsMock: CommentApiStructure[] = [
     userName: "mind_void",
   },
   {
-    id: "1lf1jjf9229dd912d9",
+    _id: "1lf1jjf9229dd912d9",
     _idGame: idGameJenga,
     _idUser: "d;qkjd1209dj90d2912dj",
     comment: "algo estoy commentando en games 1",

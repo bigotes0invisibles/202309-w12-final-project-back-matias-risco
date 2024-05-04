@@ -32,7 +32,7 @@ class CommentsController {
 
       const newComment = await this.commentsRepository.addComment({
         ...reqComment,
-        _idUser: user.id,
+        idUser: user.id,
         userName,
       });
 

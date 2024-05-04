@@ -59,7 +59,7 @@ describe("Given the function addComment in CommentsController", () => {
           comment: {
             userName: alfredoName,
             token: alfredoToken,
-            _idGame: newComment._idGame,
+            idGame: newComment.idGame,
             comment: newComment.comment,
             response: [...newComment.response],
           },
@@ -69,15 +69,17 @@ describe("Given the function addComment in CommentsController", () => {
       const expectCode = 200;
       const expectInformation: CommentApiStructure = {
         id,
-        ...newComment,
-        _idUser: alfredoId,
+        comment: newComment.comment,
+        response: newComment.response,
         userName: alfredoName,
       };
 
       const commentsRepository: Partial<CommentsRepositoryStructure> = {
-        addComment: async (
-          comment: CommentWithOutId,
-        ): Promise<CommentApiStructure> => ({
+        addComment: async ({
+          idGame,
+          idUser,
+          ...comment
+        }: CommentWithOutId): Promise<CommentApiStructure> => ({
           id,
           ...comment,
         }),
@@ -107,7 +109,7 @@ describe("Given the function addComment in CommentsController", () => {
           comment: {
             userName: alfredoName,
             token: alfredoToken,
-            _idGame: newComment._idGame,
+            idGame: newComment.idGame,
             comment: newComment.comment,
             response: [...newComment.response],
           },

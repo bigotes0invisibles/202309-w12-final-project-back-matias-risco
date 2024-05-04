@@ -13,18 +13,20 @@ import mongoose from "mongoose";
 describe("Given GET /comments/ endpoint", () => {
   describe("When it receives a request with the quary of 'Archer melo' id", () => {
     test("Then it should respond with a status 200 and the comments with the 'Archer Melo' id as a parameter", async () => {
+      const archerMeloGame = gamesDatabase.find(
+        ({ name }) => name === "Archer melo",
+      )!;
       const expectCode = 200;
       const path = "/comments";
       const requestJson: GameIdStructure = {
-        idGame: gamesDatabase[0].id,
+        idGame: archerMeloGame.id,
       };
 
       const expectedComments: CommentsBaseResponBody = {
         comments: commentsMock
           .filter(({ _idGame }) => _idGame === idGameArcherMelo)
-          .map(({ id, ...comment }) => ({
+          .map(({ _id, _idGame, _idUser, ...comment }) => ({
             ...comment,
-            _idGame: gamesDatabase[0].id,
             id: expect.stringContaining("") as string,
           })),
       };

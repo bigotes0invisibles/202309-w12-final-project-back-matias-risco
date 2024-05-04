@@ -5,11 +5,11 @@ import { mockUsers } from "../../../user/mock/usersMock";
 import { type CommentWithToken, type CommentApiStructure } from "../../types";
 import jwt from "jsonwebtoken";
 import { type UserWithOutPasswordStructure } from "../../../user/types";
-
-let archerMeloGame: GameStructureApi;
+import { gamesDatabase } from "../../../../setUpTest";
 let alfredoId: string;
 let alfredoToken: string;
 let alfredoName: string;
+let archerMeloGame: GameStructureApi;
 
 beforeAll(async () => {
   const path = "/users/login/";
@@ -33,11 +33,7 @@ beforeAll(async () => {
   alfredoId = user.id;
   alfredoName = user.name;
 
-  const { games } = (await request(app).get("/games").expect(200)).body as {
-    games: GameStructureApi[];
-  };
-
-  archerMeloGame = games.find(({ name }) => name === "Archer melo")!;
+  archerMeloGame = gamesDatabase.find(({ name }) => name === "Archer melo")!;
 });
 
 describe("Given POST /comments/add/ endpoint", () => {
@@ -47,16 +43,16 @@ describe("Given POST /comments/add/ endpoint", () => {
       const expectCode = 200;
       const path = "/comments/add";
       const newComment: CommentWithToken = {
-        _idGame: archerMeloGame.id,
+        idGame: archerMeloGame.id,
         userName: alfredoName,
         token: alfredoToken,
         comment,
         response: [],
       };
 
+      console.log(`ArcherMeloId: ${newComment.idGame}`);
+
       const expectComment: CommentApiStructure = {
-        _idGame: archerMeloGame.id,
-        _idUser: alfredoId,
         comment,
         id: expect.stringContaining("") as string,
         response: [],
@@ -84,7 +80,7 @@ describe("Given POST /comments/add/ endpoint", () => {
       const path = "/comments/add";
       const userName = "megamega";
       const newComment: CommentWithToken = {
-        _idGame: archerMeloGame.id,
+        idGame: archerMeloGame.id,
         userName,
         token: alfredoToken,
         comment,
@@ -115,7 +111,7 @@ describe("Given POST /comments/add/ endpoint", () => {
       const idGame = "000000002bf16a105be9c989";
 
       const newComment: CommentWithToken = {
-        _idGame: idGame,
+        idGame,
         userName: alfredoName,
         token: alfredoToken,
         comment,

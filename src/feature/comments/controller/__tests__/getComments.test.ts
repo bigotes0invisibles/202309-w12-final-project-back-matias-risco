@@ -11,6 +11,14 @@ import { commentsMock } from "../../mock/commentsMock";
 import CommentsController from "../CommentsController";
 import type CustomError from "../../../../server/CustomError/CustomError";
 
+const findCommentsByIdGame = (idGame: string): CommentApiStructure[] =>
+  commentsMock
+    .filter(({ _idGame }) => idGame === _idGame)
+    .map(({ _id: id, _idGame, _idUser, ...comment }) => ({
+      id,
+      ...comment,
+    }));
+
 describe("Given the function getComments in CommentsController", () => {
   const [idGameJenga, archerMeloId] = gamesMock.map(({ _id }) => _id);
 
@@ -30,27 +38,27 @@ describe("Given the function getComments in CommentsController", () => {
   describe("When it is call with a Response  and a Request with the information of 'Archer Melo' id", () => {
     test("then it should call status with Code 200 and the comments with the 'Archer Melo' id as a parameter", async () => {
       const expectCode = 200;
+      const archerMeloComments: CommentApiStructure[] =
+        findCommentsByIdGame(archerMeloId);
+      const jengaComments = findCommentsByIdGame(idGameJenga);
 
       const expectedJson: Partial<CommentsBaseResponBody> = {
-        comments: expect.arrayContaining([
-          expect.objectContaining<Partial<CommentApiStructure>>({
-            _idGame: archerMeloId,
-          }),
-        ]) as CommentApiStructure[],
+        comments: expect.arrayContaining(
+          archerMeloComments,
+        ) as CommentApiStructure[],
       };
       const notExpectedJson: Partial<CommentsBaseResponBody> = {
-        comments: expect.arrayContaining([
-          expect.objectContaining<Partial<CommentApiStructure>>({
-            _idGame: idGameJenga,
-          }),
-        ]) as CommentApiStructure[],
+        comments: expect.arrayContaining(
+          jengaComments,
+        ) as CommentApiStructure[],
       };
 
       const commentsRepository: Partial<CommentsRepositoryStructure> = {
-        getCommentsByIdGame: async (
+        async getCommentsByIdGame(
           idGame: string,
-        ): Promise<CommentApiStructure[]> =>
-          commentsMock.filter(({ _idGame }) => idGame === _idGame),
+        ): Promise<CommentApiStructure[]> {
+          return findCommentsByIdGame(idGame);
+        },
       };
 
       const commentsController = new CommentsController(

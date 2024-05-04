@@ -10,3 +10,6 @@ export const copyGameApi = (game: GameStructureApi): GameStructureApi => {
     tags: [...tags],
   };
 };
+
+export const copyGamesApi = (games: GameStructureApi[]): GameStructureApi[] =>
+  games.map((game) => copyGameApi(game));

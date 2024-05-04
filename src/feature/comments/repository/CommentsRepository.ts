@@ -8,7 +8,12 @@ import { type CommentsRepositoryStructure } from "./types";
 class CommentsRepository implements CommentsRepositoryStructure {
   async addComment(comment: CommentWithOutId): Promise<CommentApiStructure> {
     try {
-      const { _idGame, userName, _idUser } = comment;
+      const {
+        idGame: _idGame,
+        userName,
+        idUser: _idUser,
+        ...baseComment
+      } = comment;
       if (!(await usersRepository.userCheck(userName, _idUser))) {
         throw new Error(`Error: the userName: ${userName} dosen't exist`);
       }
@@ -17,7 +22,9 @@ class CommentsRepository implements CommentsRepositoryStructure {
         throw new Error(`Error: the game Id: ${_idGame} dosen't exist`);
       }
 
-      const newComment = (await Comments.create(comment)).toJSON();
+      const newComment = (
+        await Comments.create({ _idGame, _idUser, userName, ...baseComment })
+      ).toJSON();
 
       return commentToApi(newComment);
     } catch (error) {

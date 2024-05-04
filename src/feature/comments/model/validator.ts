@@ -6,7 +6,7 @@ import { type GameIdStructure } from "../controller/types";
 export const addCommentValidator = {
   body: Joi.object<{ comment: CommentWithToken }>().keys({
     comment: Joi.object<CommentWithToken>().keys({
-      _idGame: Joi.string().required().length(24),
+      idGame: Joi.string().required().length(24),
       token: Joi.string().required(),
       comment: Joi.string().required(),
       userName: Joi.string().required(),

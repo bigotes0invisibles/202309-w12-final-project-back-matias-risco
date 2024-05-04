@@ -7,7 +7,10 @@ import { connectToDatabase } from "./database";
 import mongoose from "mongoose";
 import Games from "./feature/games/model/Games";
 import gamesMock from "./feature/games/mock/gamesMock";
-import { gamesWithOutId } from "./feature/games/utils/gamesTransformation";
+import {
+  gamesToApi,
+  gamesWithOutId,
+} from "./feature/games/utils/gamesTransformation";
 import Users from "./feature/user/model/Users";
 import { mockUsers } from "./feature/user/mock/usersMock";
 import {
@@ -15,10 +18,11 @@ import {
   usersToWithOutId,
 } from "./feature/user/utils/usersFunction";
 import Comments from "./feature/comments/model/Comments";
-import { commentsToWithOutId } from "./feature/comments/utils/commentTransformation";
+import { commentsDatabaseToWithOutId } from "./feature/comments/utils/commentTransformation";
 import { commentsMock } from "./feature/comments/mock/commentsMock";
 import { type GameStructureApi } from "./feature/games/types";
 import { type GamesJson } from "./feature/games/controller/types";
+import { copyGamesApi } from "./feature/games/utils/gamesCopy";
 
 export let server: MongoMemoryServer;
 export let gamesDatabase: GameStructureApi[];
@@ -36,14 +40,13 @@ beforeAll(async () => {
   const mongoDbUrl = server.getUri();
   await connectToDatabase(mongoDbUrl);
   await Games.create(gamesWithOutId(gamesMock));
-  await Users.create(await usersHashPassword(usersToWithOutId(mockUsers)));
   const response = await request(app)
     .get("/games")
     .set("Accept", "application/json");
 
   const { games } = response.body as GamesJson;
 
-  gamesDatabase = games;
+  gamesDatabase = copyGamesApi(games);
   const newGamesId = gamesMock.map(({ name, _id }) => {
     const gameIdDatabase = games.find(
       ({ name: databaseName }) => databaseName === name,
@@ -61,8 +64,8 @@ beforeAll(async () => {
 
     return newComment;
   });
-
-  await Comments.create(commentsToWithOutId(commentsForCreate));
+  await Users.create(await usersHashPassword(usersToWithOutId(mockUsers)));
+  await Comments.create(commentsDatabaseToWithOutId(commentsForCreate));
 });
 
 afterAll(async () => {
